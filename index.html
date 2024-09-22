@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarmonIA</title>
+    <style>
+        html, body {
+            height: 92%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-image: url('FonsBo1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #teclat {
+            position: absolute;
+            top: 430px;
+            left: 180px;
+            width: 800px;
+            height: 250px;
+            margin: 0 auto;
+            background-color: transparent;
+        }
+        #durada1 {
+            position: absolute;
+            top: 220px;
+            left: 250px;
+        }
+        #durada {
+            position: absolute;
+            top: 216px;
+            left: 403px;
+        }
+        #to {
+            position: absolute;
+            top: 300px;
+            left: 250px;
+        }
+        #generar {
+            position: absolute;
+            top: 500px;
+            left: 700px;
+        }
+        #reproduir {
+            position: absolute;
+            top: 460px;
+            left: 1090px;
+        }
+        .nota {
+            position: absolute;
+            border: 1px solid #000;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .nota.white {
+            background-color: white;
+            width: 55px;
+            height: 247px;
+        }
+        .nota.black {
+            background-color: black;
+            width: 31px;
+            height: 142px;
+            left: 40px; 
+            z-index: 1; 
+        }
+        .animated-button {
+            --color: #fff;
+            --background: #2B3044;
+            --hover-back: #6f6f6f;
+            z-index: 10;
+            padding: 16px 40px;
+            border-radius: 25px;
+            font-family: Impact;
+            font-size: 35px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 750px;
+            left: 360px;
+            overflow: hidden;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: var(--color);
+            background: var(--background);
+        }
+        
+        .animated-button:hover {
+            background: var(--hover-back);
+            transform: scale(1.05);
+        }
+        
+        .animated-button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s;
+            z-index: 0;
+        }
+        
+        .animated-button:hover:before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .inputs {
+            color: #292929;
+            font-size: 45px;
+            font-family: Impact;
+            font-weight: 50;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+        .titol {
+            color: #fff;
+            font-size: 5em;
+            font-weight: bold;
+            font-family: Impact;
+            letter-spacing: 4px;
+            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+            text-align: center;
+            margin-top: 20px; 
+        }
+        
+        .highlight {
+            font-size: 1.5em; 
+        }
+
+        .selector {
+            font-size: 35px; 
+            font-family: Impact; 
+            color: #000; 
+            background-color: #cfcfcf; 
+            border: 4px solid #696969; 
+            border-radius: 5px;
+            padding: 10px; 
+            appearance: none; 
+            cursor: pointer; 
+            box-shadow: 0px 1px 2px rgba(0,0,0,.2); 
+            transition: all 0.3s; 
+        }
+        
+        .selector:hover {
+            border-color: #0030d5; 
+        }
+        
+        .selector:focus {
+            border-color: #0030d5; 
+            outline: none; 
+        }
+
+        .transparent-box {
+            background-color: rgba(128, 128, 128, 0.5); 
+            border-radius: 10px; 
+            padding: 10px; 
+            position: absolute;
+            top: 250px;
+            left: 730px;
+            width: 650px;
+            height: 70px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            color: #343434;
+            font-size: 3.5em;
+            font-family: Impact;
+            font-weight: 50;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        #reproduir-img {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            cursor: pointer;
+        }
+        
+        #reproduir:hover #reproduir-img {
+            transform: scale(1.1); /* Ampliar lleugerament la imatge */
+            opacity: 0.8; /* Canviar lleugerament la opacitat */
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="titol"><span class="highlight">H</span>armon<span class="highlight">IA</span></div>
+    <label for="durada" class="inputs" id="durada1">Acords:</label>
+    <select id="durada" name="durada" class="selector">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+    </select>
+
+    <div id="to" class="inputs">To:</div>
+    
+    <button id="generar" class="animated-button">Generar Progressió</button>
+    <button id="reproduir" style="background: none; border: none; padding: 0;">
+        <img id="reproduir-img" src="reproduir1.png" alt="Reproduir Àudio" style="width: 280px; height: 170px;">
+    </button>
+
+    <div id="resultat" class="transparent-box"></div>
+
+    <div id="teclat">
+        <div class="nota white" style="left: 0;" data-nota="0" data-nom="C"></div>
+        <div class="nota black" style="left: 40px;" data-nota="1" data-nom="Db"></div>
+        <div class="nota white" style="left: 55px;" data-nota="2" data-nom="D"></div>
+        <div class="nota black" style="left: 95px;" data-nota="3" data-nom="Eb"></div>
+        <div class="nota white" style="left: 110px;" data-nota="4" data-nom="E"></div>
+        <div class="nota white" style="left: 165px;" data-nota="5" data-nom="F"></div>
+        <div class="nota black" style="left: 205px;" data-nota="6" data-nom="F#"></div>
+        <div class="nota white" style="left: 220px;" data-nota="7" data-nom="G"></div>
+        <div class="nota black" style="left: 260px;" data-nota="8" data-nom="Ab"></div>
+        <div class="nota white" style="left: 275px;" data-nota="9" data-nom="A"></div>
+        <div class="nota black" style="left: 315px;" data-nota="10" data-nom="Bb"></div>
+        <div class="nota white" style="left: 330px;" data-nota="11" data-nom="B"></div>
+    </div>
+
+    <script>
+        const acords = {0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B"};
+        let to = ""; 
+        let progressioActual = []; 
+    
+        document.querySelectorAll('.nota').forEach(nota => {
+            nota.addEventListener('mouseenter', () => {
+                nota.style.backgroundColor = 'lightgray'; 
+            });
+            nota.addEventListener('mouseleave', () => {
+                nota.style.backgroundColor = '';
+            });
+            nota.addEventListener('click', () => {
+                to = parseInt(nota.getAttribute('data-nota')); 
+                document.getElementById('to').innerHTML = `To: ${nota.getAttribute('data-nom')}`; 
+            });
+        });
+    
+        function generarProgressio(durada, dades, to) {
+            let progressio = [];
+            while (progressio.length < durada) {
+                if (dades.length === 0) {
+                    console.error("No hi ha dades disponibles per generar la progressió.");
+                    return [];
+                }
+                const progressioAleatoria = dades[Math.floor(Math.random() * dades.length)];
+                const acordsSeparats = progressioAleatoria.split(" ");
+    
+                for (let acord of acordsSeparats) {
+                    if (/^\d+m?$/.test(acord)) {
+                        progressio.push(acord);
+                    }
+                }
+            }
+    
+            progressioActual = progressio.slice(0, durada).map(i => {
+                const acordNum = parseInt(i);
+                const nota = (acordNum + to) % 12;
+                return i.includes('m') ? acords[nota] + 'm' : acords[nota];
+            });
+    
+            return progressioActual;
+        }
+    
+        document.getElementById('generar').addEventListener('click', () => {
+            const durada = parseInt(document.getElementById('durada').value);
+            const dades = [
+                '0', '0', '0', '0', '0', '0', '0', '0', '0',
+                '9m', '9m', '9m', '9m', '9m', '9m', '9m',
+                '0 9m', '0 9m', '0 9m', '0 9m', '0 9m',
+                '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7', '0 5 7',
+                '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5', '0 7 9m 5'
+            ];
+            const resultat = generarProgressio(durada, dades, to);
+            const progressioText = resultat.length ? `${resultat.join(' ')}` : "No es pot generar la progressió.";
+            document.getElementById('resultat').innerHTML = progressioText;
+        });
+    
+        // Funció per reproduir acords seqüencialment
+        function reproduirProgressio(progressio) {
+            let index = 0;
+    
+            function tocarSeguentAcord() {
+                if (index < progressio.length) {
+                    const acord = progressio[index];
+                    const audio = new Audio(`${acord}.mp3`);
+                    audio.play();
+    
+                    // Quan l'àudio acaba, passa al següent acord
+                    audio.addEventListener('ended', () => {
+                        index++;
+                        tocarSeguentAcord();
+                    });
+                }
+            }
+    
+            // Iniciar la reproducció amb el primer acord
+            tocarSeguentAcord();
+        }
+    
+        document.getElementById('reproduir').addEventListener('click', () => {
+            if (progressioActual.length > 0) {
+                reproduirProgressio(progressioActual);
+            } else {
+                alert("No hi ha cap progressió per reproduir.");
+            }
+        });
+    </script>
+</body>
+</html>
