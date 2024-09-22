@@ -227,11 +227,14 @@
         <div class="nota black" style="left: 315px;" data-nota="10" data-nom="Bb"></div>
         <div class="nota white" style="left: 330px;" data-nota="11" data-nom="B"></div>
     </div>
-
     <script>
         const acords = {0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B"};
         let to = ""; 
         let progressioActual = []; 
+    
+        function nomArxiu(acord) {
+            return acord.replace('#', 'sharp');
+        }
     
         document.querySelectorAll('.nota').forEach(nota => {
             nota.addEventListener('mouseenter', () => {
@@ -293,7 +296,7 @@
             function tocarSeguentAcord() {
                 if (index < progressio.length) {
                     const acord = progressio[index];
-                    const audio = new Audio(`${acord}.mp3`);
+                    const audio = new Audio(`${nomArxiu(acord)}.mp3`);
                     audio.play();
     
                     // Quan l'àudio acaba, passa al següent acord
